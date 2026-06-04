@@ -1,6 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
-@theme inline {
+@theme {
+  --font-serif: "Fraunces", Georgia, serif;
+  --font-sans: "Hanken Grotesk", system-ui, sans-serif;
+  
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-brand-card: var(--card);
+  --color-line: var(--line);
+  --color-navy: var(--navy);
+  --color-gold: var(--gold);
+  --color-teal: var(--teal);
+  --color-rose: var(--rose);
+  --color-plum: var(--plum);
+  --color-sky: var(--sky);
+  --color-coral: var(--coral);
+  --color-sage-brand: var(--sage-brand);
+  --color-ember: var(--ember);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -24,11 +44,27 @@
   --sage-foreground: oklch(0.45 0.055 155);
   --surface-muted: oklch(0.985 0.004 120);
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --border: oklch(0.929 0.013 255.508);
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--card);
+  --card-foreground: var(--ink);
+  --border: var(--line);
+
+  --ink: #171d2b;
+  --ink-soft: #566280;
+  --paper: #f4eee2;
+  --paper-2: #eadfce;
+  --card: #fffdf8;
+  --line: #e2d8c3;
+  --navy: #121a30;
+  --gold: #c8973a;
+  --teal: #0e7c6e;
+  --rose: #c2607e;
+  --plum: #6d28d9;
+  --sky: #2f6fb0;
+  --coral: #e0613a;
+  --sage-brand: #7c9473;
+  --ember: #d8472f;
 }
 
 @layer base {
@@ -39,6 +75,17 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
   }
 }
-
