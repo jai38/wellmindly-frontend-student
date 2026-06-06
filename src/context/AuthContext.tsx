@@ -63,15 +63,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const storedUser = localStorage.getItem(USER_KEY);
 
     if (storedToken && storedUser && !isTokenExpired(storedToken)) {
-      setToken(storedToken);
-      setUser(JSON.parse(storedUser) as User);
+      const handle = setTimeout(() => {
+        setToken(storedToken);
+        setUser(JSON.parse(storedUser) as User);
+        setIsLoading(false);
+      }, 0);
+      return () => clearTimeout(handle);
     } else {
       // Clear stale / expired data
       localStorage.removeItem(TOKEN_KEY);
       localStorage.removeItem(USER_KEY);
+      const handle = setTimeout(() => {
+        setIsLoading(false);
+      }, 0);
+      return () => clearTimeout(handle);
     }
-
-    setIsLoading(false);
   }, []);
 
   const loginSuccess = useCallback((newToken: string, newUser: User) => {
@@ -102,6 +108,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
 // ------- Hook -------
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth(): AuthContextValue {
   const context = useContext(AuthContext);
   if (context === undefined) {

@@ -2,12 +2,12 @@ import {
   ArrowLeft, 
   ArrowRight, 
   Check, 
-  Calendar, 
-  MessageSquare, 
   RotateCcw, 
   Activity, 
   Info,
-  CheckCircle2
+  CheckCircle2,
+  BrainCircuit,
+  ClipboardList
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useQuizEngine } from "../hooks/useQuizEngine";
@@ -39,7 +39,7 @@ const OPTIONS: Option[] = [
 
 interface AssessmentWizardProps {
   onClose?: () => void;
-  onComplete?: (score: number) => void;
+  onComplete?: (score: number, answers?: Record<number, number>) => void;
 }
 
 export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps) {
@@ -57,11 +57,12 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
     handleNext,
     handlePrevious,
     handleReset,
+    answers,
   } = useQuizEngine({
     questions: PHQ9_QUESTIONS,
-    onSubmit: async (score) => {
+    onSubmit: async (score, answersMap) => {
       if (onComplete) {
-        onComplete(score);
+        onComplete(score, answersMap);
       }
     }
   });
@@ -69,7 +70,6 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
   const totalQuestions = PHQ9_QUESTIONS.length;
 
   // Scoring range mapping for 5 PHQ-9 questions (Max score: 15)
-  // 0-4: Minimal/None, 5-9: Mild, 10-14: Moderate, 15: Severe
   const getSeverity = (score: number) => {
     if (score <= 4) return { 
       label: "Minimal Stress", 
@@ -81,19 +81,19 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
       label: "Mild Stress", 
       color: "text-amber-700 bg-amber-50 border-amber-100", 
       barColor: "bg-amber-500",
-      desc: "You are experiencing mild depressive or anxious symptoms. Consider speaking to a peer counselor or utilizing our AI Wellness Companion to build coping mechanisms." 
+      desc: "You are experiencing mild depressive or anxious symptoms. Consider focusing on self-reflection, building positive coping habits, or taking further self-reflection tests." 
     };
     if (score <= 12) return { 
       label: "Moderate Stress", 
       color: "text-orange-700 bg-orange-50 border-orange-100", 
       barColor: "bg-orange-500",
-      desc: "You are experiencing moderate emotional load. We strongly recommend scheduling a one-on-one video session with one of our licensed student mentors or campus staff." 
+      desc: "You are experiencing moderate emotional load. We recommend review of sleep habits, workload scheduling, and routine self-checks to manage stressors." 
     };
     return { 
       label: "Escalated Anxiety / Stress", 
       color: "text-rose-700 bg-rose-50 border-rose-100", 
       barColor: "bg-rose-500",
-      desc: "Your score indicates severe wellness disruption. Please connect with our emergency peer counselors or standard campus hotlines immediately for direct guidance." 
+      desc: "Your score indicates severe wellness disruption. Please connect with your primary care provider or campus resources for clinical support." 
     };
   };
 
@@ -106,7 +106,7 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
         {/* Dynamic Smooth Progress Tracker at absolute top */}
         <div className="w-full bg-gray-100 h-1.5 relative overflow-hidden">
           <div 
-            className="h-full bg-[#6EE7B7] transition-all duration-500 ease-out"
+            className="h-full bg-plum transition-all duration-500 ease-out"
             style={{ width: `${progressPercentage}%` }}
           />
         </div>
@@ -126,7 +126,7 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
               >
                 {/* Header context label */}
                 <div className="flex items-center gap-2 mb-6 text-slate-400">
-                  <Activity className="h-4 w-4 text-teal-600" />
+                  <Activity className="h-4 w-4 text-plum" />
                   <span className="text-xs font-bold uppercase tracking-widest">
                     Wellness Assessment • Question {currentStep + 1} of {totalQuestions}
                   </span>
@@ -151,7 +151,7 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
                             !isLast ? "border-b border-slate-100/80" : ""
                           } ${
                             isSelected 
-                              ? "bg-teal-50/60 text-teal-900" 
+                              ? "bg-plum/10 text-plum font-semibold" 
                               : "bg-white text-slate-700 hover:bg-slate-50/50"
                           }`}
                         >
@@ -159,14 +159,14 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
                           {isSelected && (
                             <motion.div
                               layoutId={`activeIndicator-${activeQuestion.id}`}
-                              className="absolute left-0 top-0 bottom-0 w-1.5 bg-teal-500 rounded-r-full"
+                              className="absolute left-0 top-0 bottom-0 w-1.5 bg-plum rounded-r-full"
                               transition={{ type: "spring", stiffness: 300, damping: 30 }}
                             />
                           )}
                           <span className="tracking-wide relative z-10 pl-2">{option.label}</span>
                           
                           {isSelected ? (
-                            <div className="h-6 w-6 rounded-full bg-teal-600 text-white flex items-center justify-center shadow-sm relative z-10 scale-110 transition-transform">
+                            <div className="h-6 w-6 rounded-full bg-plum text-white flex items-center justify-center shadow-sm relative z-10 scale-110 transition-transform">
                               <Check className="h-4 w-4 stroke-[3]" />
                             </div>
                           ) : (
@@ -208,7 +208,7 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
                     disabled={!isAnswered || isSubmitting}
                     className={`group flex items-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-bold shadow-sm transition-all duration-300 outline-none ${
                       isAnswered && !isSubmitting
-                        ? "bg-teal-700 hover:bg-teal-800 text-white cursor-pointer hover:shadow"
+                        ? "bg-plum hover:bg-plum/90 text-white cursor-pointer hover:shadow"
                         : "bg-slate-100 text-slate-400 cursor-not-allowed shadow-none"
                     }`}
                   >
@@ -238,7 +238,7 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
                 className="py-2 flex flex-col h-full"
               >
                 <div className="text-center mb-6">
-                  <div className="inline-flex h-14 w-14 bg-teal-50 text-teal-600 rounded-3xl items-center justify-center mb-4 border border-teal-100 shadow-sm">
+                  <div className="inline-flex h-14 w-14 bg-plum/10 text-plum rounded-3xl items-center justify-center mb-4 border border-plum/20 shadow-sm">
                     <CheckCircle2 className="h-7 w-7" />
                   </div>
                   <h3 className="text-2xl font-black text-slate-900 tracking-tight mb-2">Assessment Results</h3>
@@ -272,7 +272,7 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
                       <div className="h-full bg-emerald-400" style={{ width: '25%' }}></div>
                       <div className="h-full bg-amber-400" style={{ width: '25%' }}></div>
                       <div className="h-full bg-orange-400" style={{ width: '25%' }}></div>
-                      <div className="h-full bg-rose-500" style={{ width: '25%' }}></div>
+                      <div className="h-full bg-rose-50" style={{ width: '25%' }}></div>
                     </div>
                     {/* Indicator Marker */}
                     <motion.div 
@@ -291,7 +291,7 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
                   {/* Summarized Narrative Insight */}
                   <div className="bg-slate-50 rounded-2xl p-5 border border-slate-100">
                     <h4 className="flex items-center gap-2 text-xs font-black text-slate-800 uppercase tracking-wider mb-2">
-                      <Info className="h-4 w-4 text-teal-600" />
+                      <Info className="h-4 w-4 text-plum" />
                       Feedback Narrative
                     </h4>
                     <p className="text-sm font-medium text-slate-600 leading-relaxed">
@@ -305,35 +305,35 @@ export function AssessmentWizard({ onClose, onComplete }: AssessmentWizardProps)
                   <button 
                     onClick={() => {
                       if (onClose) onClose();
-                      // Next steps would normally route to AI view
+                      if (onComplete) onComplete(totalScore, answers);
                     }}
-                    className="group relative overflow-hidden bg-white border border-slate-200 hover:border-blue-300 rounded-2xl p-5 text-left transition-all hover:shadow-md outline-none cursor-pointer"
+                    className="group relative overflow-hidden bg-white border border-slate-200 hover:border-plum/30 rounded-2xl p-5 text-left transition-all hover:shadow-md outline-none cursor-pointer"
                   >
                     <div className="absolute -top-4 -right-4 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                      <MessageSquare className="w-24 h-24 text-blue-600" />
+                      <BrainCircuit className="w-24 h-24 text-plum" />
                     </div>
-                    <div className="h-10 w-10 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center mb-4 relative z-10 group-hover:scale-110 transition-transform">
-                      <MessageSquare className="h-5 w-5" />
+                    <div className="h-10 w-10 bg-plum/10 text-plum rounded-xl flex items-center justify-center mb-4 relative z-10 group-hover:scale-110 transition-transform">
+                      <BrainCircuit className="h-5 w-5" />
                     </div>
-                    <h4 className="font-bold text-slate-900 mb-1 relative z-10">Chat Immediately with AI Support</h4>
-                    <p className="text-xs font-medium text-slate-500 relative z-10">Get instant, confidential coping strategies and a listening ear right now.</p>
+                    <h4 className="font-bold text-slate-900 mb-1 relative z-10">Explore Discover Quizzes</h4>
+                    <p className="text-xs font-medium text-slate-500 relative z-10">Unveil other self-reflection tests like strengths, values, and traits.</p>
                   </button>
 
                   <button 
                     onClick={() => {
                       if (onClose) onClose();
-                      // Next steps would normally route to Counseling view
+                      if (onComplete) onComplete(totalScore, answers);
                     }}
-                    className="group relative overflow-hidden bg-slate-900 hover:bg-slate-800 border border-transparent rounded-2xl p-5 text-left transition-all shadow-md outline-none cursor-pointer"
+                    className="group relative overflow-hidden bg-plum hover:bg-plum/90 border border-transparent rounded-2xl p-5 text-left transition-all shadow-md outline-none cursor-pointer"
                   >
                     <div className="absolute -top-4 -right-4 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                      <Calendar className="w-24 h-24 text-white" />
+                      <ClipboardList className="w-24 h-24 text-white" />
                     </div>
                     <div className="h-10 w-10 bg-white/10 text-white rounded-xl flex items-center justify-center mb-4 relative z-10 group-hover:scale-110 transition-transform">
-                      <Calendar className="h-5 w-5" />
+                      <ClipboardList className="h-5 w-5" />
                     </div>
-                    <h4 className="font-bold text-white mb-1 relative z-10">Book a Virtual Consultation</h4>
-                    <p className="text-xs font-medium text-slate-300 relative z-10">Schedule a 1-on-1 video session with a verified student wellness coach.</p>
+                    <h4 className="font-bold text-white mb-1 relative z-10">View Quiz Results Timeline</h4>
+                    <p className="text-xs font-medium text-slate-300 relative z-10">See your historical well-being scores and structured trajectory.</p>
                   </button>
                 </div>
                 

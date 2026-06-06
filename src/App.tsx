@@ -1,10 +1,18 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { LoginPage } from './pages/Login';
 import { LandingPage } from './pages/LandingPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Dashboard } from './pages/Dashboard';
 import { DiscoverPage } from './pages/DiscoverPage';
+
+function DiscoverRoute() {
+  const { user } = useAuth();
+  if (user) {
+    return <Navigate to="/dashboard?tab=discover" replace />;
+  }
+  return <DiscoverPage />;
+}
 
 function App() {
   return (
@@ -13,7 +21,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/discover" element={<DiscoverPage />} />
+          <Route path="/discover" element={<DiscoverRoute />} />
           <Route 
             path="/dashboard" 
             element={

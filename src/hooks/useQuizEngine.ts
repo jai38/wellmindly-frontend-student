@@ -78,9 +78,10 @@ export function useQuizEngine<T extends { id: number }>({
           });
         }
         setIsSubmitted(true);
-      } catch (err: any) {
+      } catch (err) {
         console.error('Quiz submission failed:', err);
-        setError(err.response?.data?.error || err.message || 'Failed to submit assessment.');
+        const errorMsg = (err as { response?: { data?: { error?: string } }; message?: string }).response?.data?.error || (err as Error).message || 'Failed to submit assessment.';
+        setError(errorMsg);
       } finally {
         setIsSubmitting(false);
       }
