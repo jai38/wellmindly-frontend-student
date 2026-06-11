@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useDashboard } from "../hooks/useDashboard";
 import { DashboardLayout } from "../components/dashboard/DashboardLayout";
 import { OverviewTab } from "../components/dashboard/OverviewTab";
@@ -6,9 +7,16 @@ import { DiscoverTab } from "../components/dashboard/DiscoverTab";
 import { ScreeningModal } from "../components/dashboard/ScreeningModal";
 import { CheckinModal } from "../components/dashboard/CheckinModal";
 import { ReportDetailModal } from "../components/dashboard/ReportDetailModal";
+import { ComingSoonModal } from "../components/dashboard/ComingSoonModal";
 
 export function Dashboard() {
   const db = useDashboard();
+  const [comingSoonFeature, setComingSoonFeature] = useState<"writemindly" | "talkmindly" | null>(null);
+
+  // Update document title for SEO
+  useEffect(() => {
+    document.title = "Student Dashboard — WellMindly";
+  }, []);
 
   return (
     <>
@@ -23,6 +31,7 @@ export function Dashboard() {
         initials={db.initials}
         logout={db.logout}
         onLogoClick={() => db.navigate("/")}
+        onComingSoonClick={(feature) => setComingSoonFeature(feature)}
       >
         {/* ---------- DASHBOARD HOME VIEW ---------- */}
         {db.activeTab === "overview" && (
@@ -96,6 +105,12 @@ export function Dashboard() {
       <ReportDetailModal
         report={db.selectedReport}
         onClose={() => db.setSelectedReport(null)}
+      />
+
+      <ComingSoonModal
+        show={comingSoonFeature !== null}
+        onClose={() => setComingSoonFeature(null)}
+        feature={comingSoonFeature}
       />
     </>
   );

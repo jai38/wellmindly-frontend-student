@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -8,6 +8,7 @@ import {
 import { LandingHeader } from "../components/landing/LandingHeader";
 import { LandingFooter } from "../components/landing/LandingFooter";
 import { HeroSection } from "../components/landing/HeroSection";
+import { ComingSoonModal } from "../components/dashboard/ComingSoonModal";
 
 // Feeling chip definitions and custom reflections
 const FEELING_CHIPS = [
@@ -47,6 +48,12 @@ const FOCUS_AREAS = [
 export function LandingPage() {
   const navigate = useNavigate();
   const [showCrisisModal, setShowCrisisModal] = useState(false);
+  const [comingSoonFeature, setComingSoonFeature] = useState<"writemindly" | "talkmindly" | null>(null);
+  
+  // Update document title for SEO
+  useEffect(() => {
+    document.title = "WellMindly — Get to know yourself, feel a little better";
+  }, []);
   
   // Interactive Section States
   const [selectedFeeling, setSelectedFeeling] = useState<typeof FEELING_CHIPS[0] | null>(null);
@@ -363,7 +370,7 @@ export function LandingPage() {
                   </p>
                 </div>
                 <button
-                  onClick={handleCheckInClick}
+                  onClick={() => setComingSoonFeature("writemindly")}
                   className="rounded-full bg-navy text-white py-3.5 px-6.5 text-xs font-bold w-full text-center hover:bg-navy/90 transition-colors cursor-pointer border-none"
                 >
                   Start writing
@@ -388,8 +395,8 @@ export function LandingPage() {
                   </p>
                 </div>
                 <button
-                  onClick={handleCheckInClick}
-                  className="rounded-full bg-navy text-white py-3.5 px-6.5 text-xs font-bold w-full text-center hover:bg-navy/90 transition-colors cursor-pointer border-none"
+                  onClick={() => setComingSoonFeature("talkmindly")}
+                  className="rounded-full bg-navy text-white py-3.5 px-6.5 text-xs font-bold w-full text-center hover:bg-navy/95 transition-colors cursor-pointer border-none"
                 >
                   Find your space
                 </button>
@@ -685,6 +692,13 @@ export function LandingPage() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Coming Soon Feature Modal */}
+      <ComingSoonModal
+        show={comingSoonFeature !== null}
+        onClose={() => setComingSoonFeature(null)}
+        feature={comingSoonFeature}
+      />
 
       {/* Crisis Pathway Modal */}
       <AnimatePresence>

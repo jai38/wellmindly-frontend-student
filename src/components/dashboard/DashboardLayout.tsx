@@ -7,6 +7,8 @@ import {
   LogOut,
   Heart,
   ClipboardList,
+  PenTool,
+  MessageSquare,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -20,6 +22,8 @@ const menuItems: MenuItem[] = [
   { id: "overview", label: "Dashboard Home", icon: LayoutDashboard },
   { id: "assessments", label: "My Quiz Results", icon: ClipboardList },
   { id: "discover", label: "Explore Tests", icon: BrainCircuit },
+  { id: "writemindly", label: "WriteMindly", icon: PenTool },
+  { id: "talkmindly", label: "TalkMindly", icon: MessageSquare },
 ];
 
 interface DashboardLayoutProps {
@@ -33,6 +37,7 @@ interface DashboardLayoutProps {
   initials: string;
   logout: () => void;
   onLogoClick: () => void;
+  onComingSoonClick?: (feature: "writemindly" | "talkmindly") => void;
   children: ReactNode;
 }
 
@@ -47,6 +52,7 @@ export function DashboardLayout({
   initials,
   logout,
   onLogoClick,
+  onComingSoonClick,
   children,
 }: DashboardLayoutProps) {
   return (
@@ -71,29 +77,43 @@ export function DashboardLayout({
           {menuItems.map((item) => {
             const IconComp = item.icon;
             const isActive = activeTab === item.id;
+            const isComingSoon = item.id === "writemindly" || item.id === "talkmindly";
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center gap-4 px-5 py-3.5 rounded-2xl text-left text-sm font-bold transition-all duration-300 relative group outline-none cursor-pointer ${
+                onClick={() => {
+                  if (isComingSoon) {
+                    onComingSoonClick?.(item.id as "writemindly" | "talkmindly");
+                  } else {
+                    setActiveTab(item.id);
+                  }
+                }}
+                className={`w-full flex items-center justify-between gap-4 px-5 py-3.5 rounded-2xl text-left text-sm font-bold transition-all duration-300 relative group outline-none cursor-pointer ${
                   isActive ? "text-plum" : "text-slate-500 hover:text-slate-900"
                 }`}
               >
-                {/* Plum active state background utilizing Framer Motion layoutId */}
-                {isActive && (
-                  <motion.div
-                    layoutId="activeSidebarBg"
-                    className="absolute inset-0 bg-plum/10 rounded-2xl z-0"
-                    transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                  />
-                )}
+                <div className="flex items-center gap-4 flex-1">
+                  {/* Plum active state background utilizing Framer Motion layoutId */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeSidebarBg"
+                      className="absolute inset-0 bg-plum/10 rounded-2xl z-0"
+                      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                    />
+                  )}
 
-                <IconComp
-                  className={`h-5 w-5 shrink-0 z-10 transition-colors duration-300 ${
-                    isActive ? "text-plum" : "text-slate-400 group-hover:text-slate-600"
-                  }`}
-                />
-                <span className="z-10 tracking-wide">{item.label}</span>
+                  <IconComp
+                    className={`h-5 w-5 shrink-0 z-10 transition-colors duration-300 ${
+                      isActive ? "text-plum" : "text-slate-400 group-hover:text-slate-600"
+                    }`}
+                  />
+                  <span className="z-10 tracking-wide">{item.label}</span>
+                </div>
+                {isComingSoon && (
+                  <span className="ml-auto z-10 bg-plum/10 text-plum text-[10px] px-2 py-0.5 rounded-full font-bold select-none">
+                    Soon
+                  </span>
+                )}
               </button>
             );
           })}
@@ -160,22 +180,34 @@ export function DashboardLayout({
                 {menuItems.map((item) => {
                   const IconComp = item.icon;
                   const isActive = activeTab === item.id;
+                  const isComingSoon = item.id === "writemindly" || item.id === "talkmindly";
                   return (
                     <button
                       key={item.id}
                       onClick={() => {
-                        setActiveTab(item.id);
+                        if (isComingSoon) {
+                          onComingSoonClick?.(item.id as "writemindly" | "talkmindly");
+                        } else {
+                          setActiveTab(item.id);
+                        }
                         setMobileMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-4 px-5 py-3.5 rounded-2xl text-left text-sm font-bold transition-all duration-200 relative group cursor-pointer"
+                      className="w-full flex items-center justify-between gap-4 px-5 py-3.5 rounded-2xl text-left text-sm font-bold transition-all duration-200 relative group cursor-pointer"
                     >
-                      {isActive && <div className="absolute inset-0 bg-plum/10 rounded-2xl z-0" />}
-                      <IconComp
-                        className={`h-5 w-5 shrink-0 z-10 ${isActive ? "text-plum" : "text-slate-400"}`}
-                      />
-                      <span className={`z-10 ${isActive ? "text-plum font-bold" : "text-slate-600"}`}>
-                        {item.label}
-                      </span>
+                      <div className="flex items-center gap-4 flex-1">
+                        {isActive && <div className="absolute inset-0 bg-plum/10 rounded-2xl z-0" />}
+                        <IconComp
+                          className={`h-5 w-5 shrink-0 z-10 ${isActive ? "text-plum" : "text-slate-400"}`}
+                        />
+                        <span className={`z-10 ${isActive ? "text-plum font-bold" : "text-slate-600"}`}>
+                          {item.label}
+                        </span>
+                      </div>
+                      {isComingSoon && (
+                        <span className="z-10 bg-plum/10 text-plum text-[10px] px-2 py-0.5 rounded-full font-bold select-none">
+                          Soon
+                        </span>
+                      )}
                     </button>
                   );
                 })}

@@ -1,5 +1,7 @@
+import { useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ClipboardList, Clock, Info } from "lucide-react";
+import { X, ClipboardList, Clock, Info, Download, Sparkles, AlertCircle } from "lucide-react";
+import html2canvas from "html2canvas";
 
 interface ReportDetailModalProps {
   report: any | null;
@@ -22,7 +24,7 @@ function DimensionBar({
 }) {
   return (
     <div>
-      <div className="flex justify-between text-sm font-bold mb-1.5">
+      <div className="flex justify-between text-xs sm:text-sm font-bold mb-1.5">
         <span className="text-slate-700">{label}</span>
         <span className={statusColor}>{status}</span>
       </div>
@@ -118,7 +120,7 @@ function renderBreakdownForTitle(title: string, score: number) {
 }
 
 /* ── Narrative configs per quiz type ────────────────────── */
-function renderNarrative(title: string, classification: string) {
+function renderNarrative(title: string, classification: string, score: number) {
   const t = title.toLowerCase();
 
   if (t.includes("strengths") && !t.includes("shadow")) {
@@ -156,15 +158,74 @@ function renderNarrative(title: string, classification: string) {
       </p>
     );
   }
+  
+  // Default / PHQ-9 (clinical-grade)
+  const isSevere = classification.toLowerCase().includes("severe") || score > 12;
+  const isModerate = classification.toLowerCase().includes("moderate") || (score > 7 && score <= 12);
+  const isMild = classification.toLowerCase().includes("mild") || (score > 4 && score <= 7);
+
+  if (isSevere) {
+    return (
+      <div className="space-y-3">
+        <p className="text-sm text-slate-600 leading-relaxed font-medium">
+          Based on your score classification of <span className="font-semibold text-rose-600">{classification}</span>, you are carrying a heavy load right now. This index indicates significant well-being strain.
+        </p>
+        <div className="p-4 rounded-xl bg-red-50 border border-red-100 flex gap-3 text-red-800">
+          <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+          <p className="text-xs font-semibold leading-relaxed">
+            <b>Action Advised</b>: We strongly encourage you to connect with a campus counselor or professional support services. Remember, reaching out is a strength, and you do not have to carry this alone. Refer to the crisis links banner in your dashboard if you need immediate hotlines.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isModerate) {
+    return (
+      <p className="text-sm text-slate-600 leading-relaxed font-medium">
+        Based on your score classification of <span className="font-semibold text-amber-600">{classification}</span>, we recommend booking a free session with one of our wellbeing coaches. A coach can help you talk through what's heavy and map out small, practical steps for balance.
+      </p>
+    );
+  }
+
+  if (isMild) {
+    return (
+      <p className="text-sm text-slate-600 leading-relaxed font-medium">
+        Based on your score classification of <span className="font-semibold text-blue-600">{classification}</span>, we suggest prioritizing self-care, scheduling structured breaks, and tracking your check-ins daily. Exploring the signature strengths or core values tests in the Discover tab will help bring focus.
+      </p>
+    );
+  }
+
   return (
     <p className="text-sm text-slate-600 leading-relaxed font-medium">
-      Based on your score classification of <span className="font-semibold text-plum">{classification}</span>, we suggest prioritizing relaxation exercises and scheduling structured breaks during midterms. Exploring core value discovery or strengths alignment tests can help bring emotional clarity.
+      Based on your score classification of <span className="font-semibold text-emerald-600">{classification}</span>, your well-being indices look steady and balanced. Keep checking in regularly to continue building your private mosaic moodboard pattern!
     </p>
   );
 }
 
 /* ── Main component ─────────────────────────────────────── */
 export function ReportDetailModal({ report, onClose }: ReportDetailModalProps) {
+  const reportRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = async () => {
+    if (!reportRef.current) return;
+    try {
+      const canvas = await html2canvas(reportRef.current, {
+        backgroundColor: "#ffffff",
+        scale: 2,
+        useCORS: true,
+        logging: false
+      });
+      const a = document.createElement("a");
+      const filename = report ? report.quizTitle.toLowerCase().replace(/\s+/g, "-") : "report";
+      a.download = `wellmindly-${filename}.png`;
+      a.href = canvas.toDataURL("image/png");
+      a.click();
+    } catch (err) {
+      console.error("Failed to download report image:", err);
+    }
+  };
+
   return (
     <AnimatePresence>
       {report && (
@@ -184,88 +245,99 @@ export function ReportDetailModal({ report, onClose }: ReportDetailModalProps) {
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors border-none cursor-pointer outline-none"
+              className="absolute top-6 right-6 p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors border-none cursor-pointer outline-none z-10"
             >
               <X className="h-5 w-5" />
             </button>
 
-            <div className="flex items-center gap-3.5 mb-6 pb-6 border-b border-slate-100">
-              <div className="h-12 w-12 bg-plum/10 text-plum rounded-2xl flex items-center justify-center shrink-0">
-                <ClipboardList className="h-6 w-6" />
+            {/* Printable Area Wrapper */}
+            <div ref={reportRef} className="bg-white p-2">
+              <div className="flex items-center gap-3.5 mb-6 pb-6 border-b border-slate-100">
+                <div className="h-12 w-12 bg-plum/10 text-plum rounded-2xl flex items-center justify-center shrink-0">
+                  <ClipboardList className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-black text-slate-900 leading-tight">
+                    {report.quizTitle || "Well-being Assessment"}
+                  </h3>
+                  <p className="text-slate-500 font-medium text-xs mt-1.5 flex items-center gap-2">
+                    <Clock className="h-3.5 w-3.5" /> Completed on{" "}
+                    {new Date(report.date).toLocaleDateString(undefined, {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-2xl font-black text-slate-900 leading-tight">
-                  {report.quizTitle || "Well-being Assessment"}
-                </h3>
-                <p className="text-slate-500 font-medium text-xs mt-1.5 flex items-center gap-2">
-                  <Clock className="h-3.5 w-3.5" /> Completed on{" "}
-                  {new Date(report.date).toLocaleDateString(undefined, {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </p>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              {/* Score Section */}
-              <div className="bg-slate-50 rounded-3xl p-6 border border-slate-100 flex flex-col justify-center text-center sm:text-left">
-                <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">
-                  Overall Score
-                </h4>
-                <div className="flex items-baseline gap-2 justify-center sm:justify-start">
-                  <span className="text-6xl font-black text-slate-900 tracking-tighter">
-                    {report.score}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {/* Score Section */}
+                <div className="bg-slate-50 rounded-3xl p-6 border border-slate-100 flex flex-col justify-center text-center sm:text-left">
+                  <h4 className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">
+                    Overall Score
+                  </h4>
+                  <div className="flex items-baseline gap-2 justify-center sm:justify-start">
+                    <span className="text-6xl font-black text-slate-900 tracking-tighter">
+                      {report.score}
+                    </span>
+                    <span className="text-xl font-bold text-slate-400">/ {report.maxScore}</span>
+                  </div>
+                  <p className="text-xs text-slate-500 font-medium mt-4 leading-relaxed">
+                    This score measures cumulative wellness indices across sleep quality, focus
+                    dynamics, and stress triggers.
+                  </p>
+                </div>
+
+                {/* Classification Section */}
+                <div className="bg-plum/5 rounded-3xl p-6 border border-plum/10 flex flex-col justify-center">
+                  <h4 className="text-[10px] font-black text-plum/70 uppercase tracking-widest mb-2.5">
+                    Severity Evaluation
+                  </h4>
+                  <span className="text-2xl font-black text-plum leading-tight mb-4">
+                    {report.classification}
                   </span>
-                  <span className="text-xl font-bold text-slate-400">/ {report.maxScore}</span>
+                  <div className="w-full bg-plum/10 h-3 rounded-full overflow-hidden">
+                    <div
+                      className="bg-plum h-full rounded-full transition-all duration-1000"
+                      style={{ width: `${report.percentage}%` }}
+                    />
+                  </div>
                 </div>
-                <p className="text-xs text-slate-500 font-medium mt-4 leading-relaxed">
-                  This score measures cumulative wellness indices across sleep quality, focus
-                  dynamics, and stress triggers.
-                </p>
               </div>
 
-              {/* Classification Section */}
-              <div className="bg-plum/5 rounded-3xl p-6 border border-plum/10 flex flex-col justify-center">
-                <h4 className="text-[10px] font-black text-plum/70 uppercase tracking-widest mb-2.5">
-                  Severity Evaluation
-                </h4>
-                <span className="text-2xl font-black text-plum leading-tight mb-4">
-                  {report.classification}
-                </span>
-                <div className="w-full bg-plum/10 h-3 rounded-full overflow-hidden">
-                  <div
-                    className="bg-plum h-full rounded-full transition-all duration-1000"
-                    style={{ width: `${report.percentage}%` }}
-                  />
+              {/* Detailed Insights & Breakdown Section */}
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2 flex items-center gap-1.5">
+                    <Sparkles className="w-4 h-4 text-plum" /> Detailed Dimension Analysis
+                  </h4>
+                  {renderBreakdownForTitle(report.quizTitle || "", report.score)}
+                </div>
+
+                <div className="bg-slate-50 border border-slate-150 rounded-2xl p-5 mt-6">
+                  <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                    <Info className="h-4 w-4 text-plum" /> Recommended Action Narrative
+                  </h4>
+                  {renderNarrative(report.quizTitle || "", report.classification, report.score)}
                 </div>
               </div>
             </div>
 
-            {/* Detailed Insights & Breakdown Section */}
-            <div className="space-y-6">
-              <div>
-                <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider mb-4 border-b border-slate-100 pb-2">
-                  Detailed Dimension Analysis
-                </h4>
-                {renderBreakdownForTitle(report.quizTitle || "", report.score)}
-              </div>
-
-              <div className="bg-slate-50 border border-slate-150 rounded-2xl p-5 mt-6">
-                <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                  <Info className="h-4 w-4 text-plum" /> Recommended Action Narrative
-                </h4>
-                {renderNarrative(report.quizTitle || "", report.classification)}
-              </div>
-            </div>
-
-            <div className="mt-8 pt-6 border-t border-slate-100 flex justify-end">
+            {/* Action Buttons Footer */}
+            <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3 sm:justify-end">
+              <button
+                onClick={handleDownload}
+                className="inline-flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-2xl px-6 py-3.5 font-bold text-sm transition-colors cursor-pointer border-none outline-none font-sans"
+              >
+                <Download className="h-4 w-4 text-slate-500" />
+                Save Report Card
+              </button>
               <button
                 onClick={onClose}
-                className="bg-plum hover:bg-plum/90 text-white rounded-2xl px-8 py-3.5 font-bold text-sm transition-colors cursor-pointer border-none outline-none shadow-md"
+                className="bg-plum hover:bg-plum/90 text-white rounded-2xl px-8 py-3.5 font-bold text-sm transition-colors cursor-pointer border-none outline-none shadow-md shadow-plum/10 font-sans"
               >
                 Got it
               </button>

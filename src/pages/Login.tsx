@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AlertCircle, X, Heart, Shield, Mail, Lock, Eye, EyeOff, Loader2, User } from "lucide-react";
 import { GoogleLogin } from '@react-oauth/google';
 import type { CredentialResponse } from '@react-oauth/google';
@@ -13,6 +13,11 @@ export function LoginPage() {
   const navigate = useNavigate();
   
   const [mode, setMode] = useState<'login' | 'register'>('login');
+
+  // Dynamic page title for SEO
+  useEffect(() => {
+    document.title = mode === 'login' ? "Sign In — WellMindly" : "Sign Up — WellMindly";
+  }, [mode]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");

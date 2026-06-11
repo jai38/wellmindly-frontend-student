@@ -113,7 +113,10 @@ export function OverviewTab({
       {/* Executive Summaries Row */}
       <div className="w-full">
         {/* Latest Assessment Score */}
-        <div className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/60 flex flex-col sm:flex-row items-center justify-between relative overflow-hidden">
+        <motion.div
+          whileHover={{ y: -4, boxShadow: "0 20px 30px -10px rgba(0,0,0,0.03)" }}
+          className="bg-white rounded-3xl p-6 shadow-sm border border-slate-200/60 flex flex-col sm:flex-row items-center justify-between relative overflow-hidden transition-all duration-300"
+        >
           <div className="flex items-center gap-4">
             <div className="h-12 w-12 bg-plum/10 text-plum rounded-2xl flex items-center justify-center shrink-0">
               <Activity className="h-6 w-6" />
@@ -143,7 +146,7 @@ export function OverviewTab({
               No screening taken yet
             </span>
           )}
-        </div>
+        </motion.div>
       </div>
 
       {/* Historical Scores Line Chart */}
@@ -153,8 +156,8 @@ export function OverviewTab({
       <div className="w-full">
         {/* Feature 1: Quiz Link */}
         <motion.div
-          whileHover={{ y: -5 }}
-          className="bg-white rounded-[2rem] p-8 sm:p-10 shadow-sm border border-slate-200/60 flex flex-col sm:flex-row items-center justify-between gap-6 group cursor-pointer"
+          whileHover={{ y: -6, boxShadow: "0 25px 45px -15px rgba(122,91,147,0.08)" }}
+          className="bg-white rounded-[2rem] p-8 sm:p-10 shadow-sm border border-slate-200/60 flex flex-col sm:flex-row items-center justify-between gap-6 group cursor-pointer transition-all duration-300"
           onClick={onStartScreening}
         >
           <div className="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
@@ -169,7 +172,7 @@ export function OverviewTab({
               </p>
             </div>
           </div>
-          <div className="shrink-0 bg-plum text-white font-extrabold text-sm px-8 py-4 rounded-full transition-all group-hover:bg-plum/95 flex items-center gap-2">
+          <div className="shrink-0 bg-plum text-white font-extrabold text-sm px-8 py-4 rounded-full transition-all group-hover:bg-plum/95 flex items-center gap-2 shadow-lg shadow-plum/15">
             Start Quiz{" "}
             <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </div>
@@ -177,10 +180,13 @@ export function OverviewTab({
       </div>
 
       {/* Resources & Safety Banner */}
-      <div className="bg-amber-50 border border-amber-200/60 rounded-3xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <motion.div 
+        whileHover={{ y: -4 }}
+        className="bg-amber-50 border border-amber-200/60 rounded-3xl p-8 flex flex-col sm:flex-row items-center justify-between gap-6 transition-all duration-300"
+      >
         <div className="flex items-center gap-5">
           <div className="h-14 w-14 bg-amber-100 rounded-2xl flex items-center justify-center text-amber-600 shrink-0">
-            <Heart className="h-7 w-7 fill-current" />
+            <Heart className="h-7 w-7 fill-current animate-pulse" />
           </div>
           <div>
             <h4 className="text-lg font-black text-amber-950 mb-1">
@@ -196,11 +202,11 @@ export function OverviewTab({
           href="https://www.betterhelp.com/gethelpnow/"
           target="_blank"
           rel="noopener noreferrer"
-          className="shrink-0 bg-amber-600 hover:bg-amber-700 text-white px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-sm"
+          className="shrink-0 bg-amber-600 hover:bg-amber-700 text-white px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-sm hover:shadow"
         >
           View Hotlines
         </a>
-      </div>
+      </motion.div>
     </div>
   );
 }
