@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, PenTool, MessageSquare, Mail, Check, Loader2 } from "lucide-react";
+import { X, PenTool, MessageSquare, Mail, Check, Loader2, Calendar } from "lucide-react";
+import api from "../../services/api";
 
 interface ComingSoonModalProps {
   show: boolean;
   onClose: () => void;
-  feature: "writemindly" | "talkmindly" | null;
+  feature: "writemindly" | "talkmindly" | "sessionbooking" | null;
 }
 
 const FEATURE_DETAILS = {
@@ -32,6 +33,18 @@ const FEATURE_DETAILS = {
       "Strictly moderated around the clock to keep it safe",
       "No profiles, no direct messages, leave anytime"
     ]
+  },
+  sessionbooking: {
+    title: "1-on-1 Coaching",
+    tagline: "Real people. Your terms. Around your schedule.",
+    description: "When you'd rather talk it through, book a session with a wellbeing coach. Talk about stress, confidence, motivation, relationships, or sleep. Always anonymous, always on your terms.",
+    icon: Calendar,
+    colorClass: "bg-coral/10 text-coral",
+    bulletPoints: [
+      "Real human wellbeing coaches, not therapists",
+      "4 free sessions funded by your university",
+      "Choose your own coach and time slot"
+    ]
   }
 };
 
@@ -49,11 +62,19 @@ export function ComingSoonModal({ show, onClose, feature }: ComingSoonModalProps
     }
     setError("");
     setSubmitting(true);
-    // Simulate API registration delay
-    await new Promise((resolve) => setTimeout(resolve, 1200));
-    setSubmitting(false);
-    setSuccess(true);
-    setEmail("");
+    try {
+      await api.post("/auth/waitlist", {
+        email: email.trim(),
+        feature: feature || "unknown"
+      });
+      setSuccess(true);
+      setEmail("");
+    } catch (err: any) {
+      console.error(err);
+      setError(err.response?.data?.error || "Failed to join waitlist. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const currentFeature = feature ? FEATURE_DETAILS[feature] : null;

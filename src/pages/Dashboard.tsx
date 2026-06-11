@@ -11,7 +11,7 @@ import { ComingSoonModal } from "../components/dashboard/ComingSoonModal";
 
 export function Dashboard() {
   const db = useDashboard();
-  const [comingSoonFeature, setComingSoonFeature] = useState<"writemindly" | "talkmindly" | null>(null);
+  const [comingSoonFeature, setComingSoonFeature] = useState<"writemindly" | "talkmindly" | "sessionbooking" | null>(null);
 
   // Update document title for SEO
   useEffect(() => {

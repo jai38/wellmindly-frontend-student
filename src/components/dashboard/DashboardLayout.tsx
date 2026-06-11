@@ -9,6 +9,7 @@ import {
   ClipboardList,
   PenTool,
   MessageSquare,
+  Calendar,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -24,6 +25,7 @@ const menuItems: MenuItem[] = [
   { id: "discover", label: "Explore Tests", icon: BrainCircuit },
   { id: "writemindly", label: "WriteMindly", icon: PenTool },
   { id: "talkmindly", label: "TalkMindly", icon: MessageSquare },
+  { id: "sessionbooking", label: "Book a Session", icon: Calendar },
 ];
 
 interface DashboardLayoutProps {
@@ -37,7 +39,7 @@ interface DashboardLayoutProps {
   initials: string;
   logout: () => void;
   onLogoClick: () => void;
-  onComingSoonClick?: (feature: "writemindly" | "talkmindly") => void;
+  onComingSoonClick?: (feature: "writemindly" | "talkmindly" | "sessionbooking") => void;
   children: ReactNode;
 }
 
@@ -77,13 +79,13 @@ export function DashboardLayout({
           {menuItems.map((item) => {
             const IconComp = item.icon;
             const isActive = activeTab === item.id;
-            const isComingSoon = item.id === "writemindly" || item.id === "talkmindly";
+            const isComingSoon = item.id === "writemindly" || item.id === "talkmindly" || item.id === "sessionbooking";
             return (
               <button
                 key={item.id}
                 onClick={() => {
                   if (isComingSoon) {
-                    onComingSoonClick?.(item.id as "writemindly" | "talkmindly");
+                    onComingSoonClick?.(item.id as "writemindly" | "talkmindly" | "sessionbooking");
                   } else {
                     setActiveTab(item.id);
                   }
@@ -180,13 +182,13 @@ export function DashboardLayout({
                 {menuItems.map((item) => {
                   const IconComp = item.icon;
                   const isActive = activeTab === item.id;
-                  const isComingSoon = item.id === "writemindly" || item.id === "talkmindly";
+                  const isComingSoon = item.id === "writemindly" || item.id === "talkmindly" || item.id === "sessionbooking";
                   return (
                     <button
                       key={item.id}
                       onClick={() => {
                         if (isComingSoon) {
-                          onComingSoonClick?.(item.id as "writemindly" | "talkmindly");
+                          onComingSoonClick?.(item.id as "writemindly" | "talkmindly" | "sessionbooking");
                         } else {
                           setActiveTab(item.id);
                         }

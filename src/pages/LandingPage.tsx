@@ -48,7 +48,7 @@ const FOCUS_AREAS = [
 export function LandingPage() {
   const navigate = useNavigate();
   const [showCrisisModal, setShowCrisisModal] = useState(false);
-  const [comingSoonFeature, setComingSoonFeature] = useState<"writemindly" | "talkmindly" | null>(null);
+  const [comingSoonFeature, setComingSoonFeature] = useState<"writemindly" | "talkmindly" | "sessionbooking" | null>(null);
   
   // Update document title for SEO
   useEffect(() => {
@@ -61,20 +61,19 @@ export function LandingPage() {
   const [selectedCoach, setSelectedCoach] = useState<typeof COACHES[0] | null>(null);
   const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
   const [toastMessage, setToastMessage] = useState("");
-
+ 
   const handleCrisisClick = () => setShowCrisisModal(true);
   const handleCheckInClick = () => navigate("/login");
   const handleExploreClick = () => navigate("/discover");
-
+ 
   const selectFeelingChip = (chip: typeof FEELING_CHIPS[0]) => {
     setSelectedFeeling(chip);
   };
-
-  const handleBookCoach = (coach: typeof COACHES[0]) => {
-    setSelectedCoach(coach);
-    setSelectedSlot(null);
+ 
+  const handleBookCoach = () => {
+    setComingSoonFeature("sessionbooking");
   };
-
+ 
   const confirmBooking = () => {
     if (selectedSlot === null || !selectedCoach) return;
     const coachFirstName = selectedCoach.name.split(" ")[0];
@@ -466,7 +465,10 @@ export function LandingPage() {
           {/* Book a Coach */}
           <section className="py-16 border-t border-line/60" id="coaching-section">
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <span className="text-[11px] font-bold text-coral uppercase tracking-widest block mb-3">Real Human Support</span>
+              <span className="text-[11px] font-bold text-coral uppercase tracking-widest flex items-center justify-center gap-2 mb-3">
+                Real Human Support
+                <span className="bg-plum/10 text-plum text-[9px] font-bold px-2 py-0.5 rounded-full normal-case tracking-normal">Beta / Coming Soon</span>
+              </span>
               <h2 className="text-3xl sm:text-4xl font-serif text-ink tracking-tight font-medium">
                 Book a coach when you want to talk.
               </h2>
@@ -511,7 +513,7 @@ export function LandingPage() {
                       Next available: this week
                     </div>
                     <button
-                      onClick={() => handleBookCoach(coach)}
+                      onClick={() => handleBookCoach()}
                       className="w-full bg-navy text-white text-xs font-bold py-2.5 rounded-xl hover:bg-navy/90 transition-colors cursor-pointer border-none"
                     >
                       Book a session
