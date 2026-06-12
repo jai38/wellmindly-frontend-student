@@ -1,12 +1,11 @@
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
-import { SvgIcon } from "./SvgIcon";
 import { rankDims, shade, toneWord, VALUE_DESC } from "./types";
 import type { TestDef, PictureOption } from "./types";
 
 interface ResultViewProps {
   cur: TestDef;
-  curId: string;
+  curId?: string;
   data: {
     kind: string;
     scores?: Record<string, number>;
@@ -17,9 +16,9 @@ interface ResultViewProps {
   };
   accent: string;
   cardRef: React.RefObject<HTMLDivElement | null>;
-  reportRef: React.RefObject<HTMLDivElement | null>;
+  reportRef?: React.RefObject<HTMLDivElement | null>;
   onSaveCard: () => void;
-  onSaveReportPdf: () => void;
+  onSaveReportPdf?: () => void;
   onRetake: () => void;
   goTo: (v: 'hub' | 'test' | 'result' | 'results') => void;
   resultsData?: any;
@@ -28,7 +27,6 @@ interface ResultViewProps {
 
 export function ResultView({
   cur,
-  curId,
   data,
   accent,
   cardRef,
@@ -380,7 +378,7 @@ export function ResultView({
           <span>🖼️ Share Card Image</span>
         </button>
         <button 
-          onClick={onSaveReportPdf} 
+          onClick={onSaveReportPdf || (() => window.print())} 
           className="cursor-pointer inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-plum hover:bg-plum/90 text-white font-extrabold text-[14.5px] shadow-lg shadow-plum/20 transition hover:-translate-y-0.5 active:scale-[.97] border-none"
         >
           <span>📄 Save Report (PDF)</span>

@@ -27,6 +27,7 @@ interface DiscoverTabProps {
   onSaveReportPdf: () => void;
   resultsData: any;
   onComingSoonClick: (feature: "writemindly" | "talkmindly" | "sessionbooking") => void;
+  onSwitchToAssessments: () => void;
 }
 
 export function DiscoverTab({
