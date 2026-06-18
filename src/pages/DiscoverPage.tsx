@@ -187,18 +187,18 @@ export function DiscoverPage() {
               className="flex items-center gap-2 font-extrabold text-[17px] tracking-tight cursor-pointer hover:opacity-85 select-none transition-opacity font-serif text-ink"
             >
               <Heart className="w-5 h-5 text-plum fill-current animate-pulse" />
-              WellMindly <span className="text-ink-soft font-semibold text-sm font-sans">· Discover</span>
+              WellMindly <span className="hidden sm:inline text-ink-soft font-semibold text-sm font-sans">· Discover</span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <button 
                 onClick={() => goTo('results')} 
-                className="text-sm font-extrabold text-ink-soft hover:text-ink transition cursor-pointer border-none bg-transparent"
+                className="text-xs sm:text-sm font-extrabold text-ink-soft hover:text-ink transition cursor-pointer border-none bg-transparent whitespace-nowrap"
               >
                 My collection
               </button>
               <button 
                 onClick={() => goTo('hub')} 
-                className="text-white bg-plum px-5 py-2 rounded-full font-extrabold text-[13.5px] hover:bg-plum/90 transition shadow-sm cursor-pointer border-none"
+                className="text-white bg-plum px-3.5 py-1.5 sm:px-5 sm:py-2 rounded-full font-extrabold text-[12px] sm:text-[13.5px] hover:bg-plum/90 transition shadow-sm cursor-pointer border-none whitespace-nowrap"
               >
                 All tests
               </button>

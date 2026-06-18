@@ -40,7 +40,7 @@ export const TESTS: Record<string, TestDef> = {
     blurb: "A five-question baseline health questionnaire to screen and monitor your wellness levels.", 
     kind: "profile", 
     overall: true, 
-    tag: "Clinical · 2 min", 
+    tag: "Self-check · 2 min", 
     intro: "Over the last two weeks, how often have you been bothered by any of the following problems?", 
     items: [
       { q: "Little interest or pleasure in doing things?", d: "Interest" }, 
