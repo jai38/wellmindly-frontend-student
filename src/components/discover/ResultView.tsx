@@ -83,7 +83,7 @@ export function ResultView({
           </h2>
           <p className="font-serif text-lg text-ink-soft leading-relaxed font-medium">
             {data.aiFeedback ? data.aiFeedback.narrative : (
-              <>Noted — today felt <b className="text-plum font-extrabold">{opt.label.toLowerCase()}</b>. That's a tile on your moodboard now. The pattern across days tells the real story.</>
+              <>Noted. Today felt <b className="text-plum font-extrabold">{opt.label.toLowerCase()}</b>. That's a tile on your moodboard now. The pattern across days tells the real story.</>
             )}
           </p>
         </div>
@@ -106,7 +106,7 @@ export function ResultView({
           {!data.aiFeedback && data.top[1] && (
             <div className="border-l-[3px] border-plum bg-[#fffdf8]/60 backdrop-blur-sm rounded-r-[14px] p-5 text-[14.5px] shadow-sm font-semibold text-ink-soft">
               <h4 className="text-xs tracking-wider uppercase text-ink-soft font-extrabold mb-1">Your second value</h4>
-              <b className="text-ink font-bold">{data.top[1]}</b> — {VALUE_DESC[data.top[1]] || ''}
+              <b className="text-ink font-bold">{data.top[1]}</b>: {VALUE_DESC[data.top[1]] || ''}
             </div>
           )}
           
@@ -136,7 +136,7 @@ export function ResultView({
             )}
           </h2>
           <p className="font-serif text-lg leading-relaxed text-ink-soft font-medium mt-1">
-            {data.aiFeedback ? data.aiFeedback.narrative : "These are the qualities you lead with. Leaning into your signature strengths — on purpose, this week — is one of the most reliable ways to feel more like yourself."}
+            {data.aiFeedback ? data.aiFeedback.narrative : "These are the qualities you lead with. Leaning into your signature strengths, on purpose this week, is one of the most reliable ways to feel more like yourself."}
           </p>
 
           <ShareCard accent={accent} cardRef={cardRef}>

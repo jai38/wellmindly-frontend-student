@@ -14,8 +14,8 @@ import { useAuth } from "../context/AuthContext";
 
 // Feeling chip definitions and custom reflections
 const FEELING_CHIPS = [
-  { name: "Overwhelmed", emoji: "🤯", text: "When everything feels urgent, nothing gets to feel small. You're not weak for struggling to keep up — you're carrying a lot at once. Want to put some of it down for a minute?" },
-  { name: "Flat", emoji: "😐", text: "Some days are just grey. You don't have to force yourself to find the bright side — sometimes just sitting with the quiet is what you need. No pressure to feel any other way right now." },
+  { name: "Overwhelmed", emoji: "🤯", text: "When everything feels urgent, nothing gets to feel small. You're not weak for struggling to keep up, you're carrying a lot at once. Want to put some of it down for a minute?" },
+  { name: "Flat", emoji: "😐", text: "Some days are just grey. You don't have to force yourself to find the bright side. Sometimes just sitting with the quiet is what you need. No pressure to feel any other way right now." },
   { name: "Can't switch off", emoji: "🌀", text: "Your brain is running miles ahead of your body, replaying the past and pre-playing the future. It's exhausting. Let's slow things down, even if just for a minute." },
   { name: "Numb", emoji: "🌫️", text: "When everything gets to be too much, sometimes our brains just turn the volume down on all of it. You're not empty, you're just overloaded. Give yourself permission to just be." },
   { name: "Just tired", emoji: "🥱", text: "Not the kind of tired sleep fixes. The kind where your head is heavy and the next step feels like too much. It's okay to have nothing left in the tank today." },
@@ -23,11 +23,11 @@ const FEELING_CHIPS = [
 ];
 
 const LAUNCH_TESTS = [
-  { id: "checkin", name: "Emotional check-in", desc: "A two-minute wellbeing snapshot. See how you're really doing — and watch it shift over the weeks.", tag: "Wellbeing · 2 min", color: "from-teal to-teal/80" },
-  { id: "strengths", name: "Signature strengths", desc: "Your top five character strengths — the qualities you lead with, on a card made to share.", tag: "Strengths · 2 min", color: "from-gold to-gold/80" },
+  { id: "checkin", name: "Emotional check-in", desc: "A two-minute wellbeing snapshot. See how you're really doing, and watch it shift over the weeks.", tag: "Wellbeing · 2 min", color: "from-teal to-teal/80" },
+  { id: "strengths", name: "Signature strengths", desc: "Your top five character strengths: the qualities you lead with, on a card made to share.", tag: "Strengths · 2 min", color: "from-gold to-gold/80" },
   { id: "bigfive", name: "Personality profile", desc: "Five core traits that add up to an archetype that's unmistakably you.", tag: "Identity · 2 min", color: "from-sky to-sky/80" },
-  { id: "strengthshadow", name: "Strength & shadow", desc: "Your greatest strength and its flip side — usually the same trait, turned up or down.", tag: "Insight · 2 min", color: "from-plum to-plum/80" },
-  { id: "mood", name: "Mood snapshot", desc: "A one-tap picture check. Fast and honest — and it adds a tile to your moodboard.", tag: "Quick · 15 sec", color: "from-rose to-rose/80" },
+  { id: "strengthshadow", name: "Strength & shadow", desc: "Your greatest strength and its flip side: usually the same trait, turned up or down.", tag: "Insight · 2 min", color: "from-plum to-plum/80" },
+  { id: "mood", name: "Mood snapshot", desc: "A one-tap picture check. Fast and honest, and it adds a tile to your moodboard.", tag: "Quick · 15 sec", color: "from-rose to-rose/80" },
   { id: "values", name: "What matters most", desc: "A quick this-or-that that reveals the values you quietly lead with.", tag: "Values · 90 sec", color: "from-coral to-coral/80" }
 ];
 
@@ -72,7 +72,7 @@ export function LandingPage() {
   
   // Update document title for SEO
   useEffect(() => {
-    document.title = "WellMindly — Get to know yourself, feel a little better";
+    document.title = "WellMindly | Get to know yourself, feel a little better";
   }, []);
   
   // Interactive Section States
@@ -223,7 +223,7 @@ export function LandingPage() {
                   Sometimes understanding changes more than fixing.
                 </h2>
                 <p className="text-sm text-ink-soft leading-relaxed mb-6">
-                  Not every difficult feeling needs a solution. Sometimes it just needs a name. Sometimes it needs a little attention. The goal isn't to feel good all the time — it's to understand yourself a little better today.
+                  Not every difficult feeling needs a solution. Sometimes it just needs a name. Sometimes it needs a little attention. The goal isn't to feel good all the time. It's to understand yourself a little better today.
                 </p>
                 <div className="flex flex-col gap-2">
                   {FOCUS_AREAS.map((area, idx) => (
@@ -275,7 +275,7 @@ export function LandingPage() {
                 Six quick ways to meet yourself.
               </h2>
               <p className="text-sm text-ink-soft mt-3">
-                Each takes about two minutes and hands back something worth keeping. Start with a check-in, or follow your curiosity — there's no wrong place to begin.
+                Each takes about two minutes and hands back something worth keeping. Start with a check-in, or follow your curiosity. There's no wrong place to begin.
               </p>
             </div>
 
@@ -322,7 +322,7 @@ export function LandingPage() {
                   Every check-in becomes a color.
                 </h2>
                 <p className="text-sm text-slate-300 leading-relaxed mt-4">
-                  Each time you check in, it builds your moodboard and a private picture of how your weeks actually feel. No streaks to keep, no empty calendar gaps, and no pressure — just patterns you can notice and act on.
+                  Each time you check in, it builds your moodboard and a private picture of how your weeks actually feel. No streaks to keep, no empty calendar gaps, and no pressure. Just patterns you can notice and act on.
                 </p>
               </div>
 
@@ -408,7 +408,7 @@ export function LandingPage() {
                   </div>
                   <h4 className="text-md font-bold text-ink mb-2">Say it to something that won't judge you.</h4>
                   <p className="text-sm text-ink-soft leading-relaxed mb-6">
-                    Type whatever's on your mind — messy, half-formed, 2am, all of it. WriteMindly helps you slow down long enough to hear your own thoughts. Sometimes that's all you need. No advice unless you want it.
+                    Type whatever's on your mind: messy, half-formed, 2am, all of it. WriteMindly helps you slow down long enough to hear your own thoughts. Sometimes that's all you need. No advice unless you want it.
                   </p>
                 </div>
                 <button
@@ -516,7 +516,7 @@ export function LandingPage() {
                 Book a coach when you want to talk.
               </h2>
               <p className="text-sm text-ink-soft mt-3">
-                When you'd rather talk it through, book a session with a wellbeing coach. Stress, confidence, motivation, relationships — on your terms, around your schedule.
+                When you'd rather talk it through, book a session with a wellbeing coach. Stress, confidence, motivation, relationships: on your terms, around your schedule.
               </p>
             </div>
 
@@ -567,7 +567,7 @@ export function LandingPage() {
             </div>
             
             <p className="text-xs text-ink-soft max-w-3xl">
-              Coaches are non-clinical wellbeing coaches, not therapists. If anything you're facing needs clinical care, we'll gently connect you to a qualified professional — you're never left to figure it out alone.
+              Coaches are non-clinical wellbeing coaches, not therapists. If anything you're facing needs clinical care, we'll gently connect you to a qualified professional. You're never left to figure it out alone.
             </p>
           </section>
 
@@ -580,7 +580,7 @@ export function LandingPage() {
                   Your university never sees you as a name.
                 </h2>
                 <p className="text-sm text-ink-soft leading-relaxed">
-                  WellMindly shares nothing about you as an individual — not your check-ins, not your messages, not your identity. Universities only ever see the bigger picture: when whole groups are stressed, when exam season bites. The pulse of the campus, never the student.
+                  WellMindly shares nothing about you as an individual: not your check-ins, not your messages, and not your identity. Universities only ever see the bigger picture: when whole groups are stressed, when exam season bites. The pulse of the campus, never the student.
                 </p>
               </div>
 
@@ -769,21 +769,21 @@ export function LandingPage() {
               </p>
               
               <p className="text-sm text-ink-soft leading-relaxed mb-6">
-                We're building a quiet, private space for students to check in with how they're feeling — and we want to know what you honestly make of it, before we show it to anyone else.
+                We're building a quiet, private space for students to check in with how they're feeling, and we want to know what you honestly make of it before we show it to anyone else.
               </p>
               
               <ul className="space-y-3 mb-8 text-xs sm:text-sm font-semibold text-slate-700">
                 <li className="flex gap-2.5 items-start">
                   <span className="text-plum mt-0.5">✔</span>
-                  <span><b>The check-in works</b> — go ahead and try it for real.</span>
+                  <span><b>The check-in works</b>. Go ahead and try it for real.</span>
                 </li>
                 <li className="flex gap-2.5 items-start">
                   <span className="text-plum mt-0.5">✔</span>
-                  <span><b>Two bigger features are still coming</b> — you'll see WriteMindly and TalkMindly here as previews, not finished yet.</span>
+                  <span><b>Two bigger features are still coming</b>. You'll see WriteMindly and TalkMindly here as previews, not finished yet.</span>
                 </li>
                 <li className="flex gap-2.5 items-start">
                   <span className="text-plum mt-0.5">✔</span>
-                  <span><b>There are no right answers.</b> We want your honest reaction — including the parts that feel off or fake.</span>
+                  <span><b>There are no right answers.</b> We want your honest reaction, including the parts that feel off or fake.</span>
                 </li>
               </ul>
               

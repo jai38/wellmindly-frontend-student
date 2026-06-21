@@ -112,7 +112,7 @@ export function HotlinesTab() {
             Crisis & Support Helplines
           </h2>
           <p className="text-slate-500 font-medium mt-1">
-            If you or someone you know is in crisis, these resources are here to help — 24/7.
+            If you or someone you know is in crisis, these resources are here to help 24/7.
           </p>
         </div>
       </div>
@@ -132,7 +132,7 @@ export function HotlinesTab() {
           </h3>
           <p className="text-red-700/80 text-sm mt-1 font-medium leading-relaxed">
             If you are in a life-threatening situation, please call emergency services immediately.
-            You are not alone — trained counselors are available right now.
+            You are not alone. Trained counselors are available right now.
           </p>
         </div>
       </motion.div>

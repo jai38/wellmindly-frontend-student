@@ -34,10 +34,10 @@ export function LoginPage() {
   // Dynamic page title for SEO
   useEffect(() => {
     document.title = mode === 'login' 
-      ? "Sign In — WellMindly" 
+      ? "Sign In | WellMindly" 
       : mode === 'register' 
-        ? "Sign Up — WellMindly" 
-        : "Reset Password — WellMindly";
+        ? "Sign Up | WellMindly" 
+        : "Reset Password | WellMindly";
   }, [mode]);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");

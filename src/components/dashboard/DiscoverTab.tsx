@@ -87,7 +87,7 @@ export function DiscoverTab({
           </h2>
           <p className="text-slate-500 font-medium mt-1">
             {isCheckinMode
-              ? "A two-minute wellbeing snapshot — see how you're really doing"
+              ? "A two-minute wellbeing snapshot. See how you're really doing"
               : "Discover insights about your strengths, personality, and values"}
           </p>
         </div>

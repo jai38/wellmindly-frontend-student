@@ -161,7 +161,7 @@ export function FeedbackForm({ resultId, onComplete }: FeedbackFormProps) {
             Which would you reach for first?
           </label>
           <div className="flex flex-wrap gap-2.5">
-            {["Write — on my own", "Talk — with others", "Not sure"].map((opt) => (
+            {["Write on my own", "Talk with others", "Not sure"].map((opt) => (
               <button
                 key={opt}
                 type="button"
@@ -189,7 +189,7 @@ export function FeedbackForm({ resultId, onComplete }: FeedbackFormProps) {
           <textarea
             value={feltOff}
             onChange={(e) => setFeltOff(e.target.value)}
-            placeholder="Be brutal — what was cringy or artificial?"
+            placeholder="Be brutal: what was cringy or artificial?"
             rows={2}
             className="w-full rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-plum/30 focus:border-plum/40 p-3.5 resize-none transition-all leading-relaxed"
           />

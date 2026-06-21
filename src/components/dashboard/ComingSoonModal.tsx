@@ -13,7 +13,7 @@ const FEATURE_DETAILS = {
   writemindly: {
     title: "WriteMindly",
     tagline: "Private. Instant. Always awake.",
-    description: "Type whatever's on your mind — messy, half-formed, 2am, all of it. WriteMindly helps you slow down long enough to hear your own thoughts. Sometimes that's all you need. No advice unless you want it.",
+    description: "Type whatever's on your mind: messy, half-formed, 2am, all of it. WriteMindly helps you slow down long enough to hear your own thoughts. Sometimes that's all you need. No advice unless you want it.",
     icon: PenTool,
     colorClass: "bg-teal/10 text-teal",
     bulletPoints: [

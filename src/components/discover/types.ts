@@ -60,7 +60,7 @@ export const TESTS: Record<string, TestDef> = {
     title: "Emotional check-in", 
     accent: "#7A5B93", // Styled in plum theme
     icon: "heart", 
-    blurb: "A two-minute snapshot. See how you’re really doing — and watch it shift over the weeks.", 
+    blurb: "A two-minute snapshot. See how you’re really doing, and watch it shift over the weeks.", 
     kind: "profile", 
     overall: true, 
     tag: "Wellbeing · 2 min", 
@@ -94,7 +94,7 @@ export const TESTS: Record<string, TestDef> = {
     title: "Signature strengths", 
     accent: "#C99452", // Styled in gold/brand theme
     icon: "star", 
-    blurb: "Your top five character strengths — the qualities you lead with, on a card made to share.", 
+    blurb: "Your top five character strengths: the qualities you lead with, on a card made to share.", 
     kind: "rank", 
     topN: 5, 
     tag: "Strengths · 2 min", 
@@ -158,7 +158,7 @@ export const TESTS: Record<string, TestDef> = {
     title: "Strength & shadow", 
     accent: "#7A5B93", 
     icon: "shield", 
-    blurb: "Your greatest strength and its flip side — usually the same trait, turned up.", 
+    blurb: "Your greatest strength and its flip side: usually the same trait, turned up.", 
     kind: "type", 
     card: true, 
     cardLabel: "My core strength", 
@@ -179,28 +179,28 @@ export const TESTS: Record<string, TestDef> = {
       "The Empath": { 
         desc: "You feel the room and make people feel understood. That same depth is also your edge.", 
         tag: "Feels everything", 
-        a: { label: "Your strength", text: "Deep empathy — people feel genuinely seen and safe with you." }, 
+        a: { label: "Your strength", text: "Deep empathy: people feel genuinely seen and safe with you." }, 
         b: { label: "Your shadow", text: "You absorb other people’s stress and can lose track of your own needs." }, 
         tip: "You can care deeply without carrying it all. Protect your own energy on purpose." 
       }, 
       "The Achiever": { 
         desc: "You make things happen. The drive that powers you can also run you into the ground.", 
         tag: "Driven to do", 
-        a: { label: "Your strength", text: "Real drive and follow-through — you turn intentions into results." }, 
+        a: { label: "Your strength", text: "Real drive and follow-through: you turn intentions into results." }, 
         b: { label: "Your shadow", text: "You can tie your worth to output, and rest can start to feel like failure." }, 
         tip: "You’re enough on the days you achieve nothing. Schedule rest like it’s a deadline." 
       }, 
       "The Free Spirit": { 
         desc: "You’re authentic and independent. The independence that frees you can also isolate you.", 
         tag: "Does it their way", 
-        a: { label: "Your strength", text: "Independence and authenticity — you think for yourself and live on your terms." }, 
+        a: { label: "Your strength", text: "Independence and authenticity: you think for yourself and live on your terms." }, 
         b: { label: "Your shadow", text: "You can resist structure and help that would actually make life easier." }, 
         tip: "Some structure is freedom, not a cage. Let a few people in." 
       }, 
       "The Peacemaker": { 
         desc: "You create calm and harmony. The same instinct can quietly cost you your own voice.", 
         tag: "Keeps the peace", 
-        a: { label: "Your strength", text: "You bring harmony and steadiness — people feel calmer around you." }, 
+        a: { label: "Your strength", text: "You bring harmony and steadiness: people feel calmer around you." }, 
         b: { label: "Your shadow", text: "You can bury your own needs and opinions to keep things smooth." }, 
         tip: "Your needs count too. Sometimes honest is kinder than comfortable." 
       } 
@@ -209,20 +209,20 @@ export const TESTS: Record<string, TestDef> = {
 };
 
 export const ARCHETYPE = [
-  { when: ["Openness", "Extraversion"], name: "The Explorer", desc: "Curious and outgoing — you chase new experiences and bring people along." },
-  { when: ["Conscientiousness", "Steadiness"], name: "The Anchor", desc: "Reliable and calm — the steady one others lean on." },
-  { when: ["Warmth", "Extraversion"], name: "The Connector", desc: "Warm and social — you build bridges and bring energy to a room." },
-  { when: ["Openness", "Conscientiousness"], name: "The Architect", desc: "Imaginative and disciplined — you turn big ideas into real things." },
-  { when: ["Warmth", "Steadiness"], name: "The Harmoniser", desc: "Caring and even-keeled — you keep things calm and kind." },
-  { when: ["Openness"], name: "The Seeker", desc: "Endlessly curious — ideas are your playground." },
+  { when: ["Openness", "Extraversion"], name: "The Explorer", desc: "Curious and outgoing, chasing new experiences and bringing people along." },
+  { when: ["Conscientiousness", "Steadiness"], name: "The Anchor", desc: "Reliable and calm, the steady one others lean on." },
+  { when: ["Warmth", "Extraversion"], name: "The Connector", desc: "Warm and social, building bridges and bringing energy to a room." },
+  { when: ["Openness", "Conscientiousness"], name: "The Architect", desc: "Imaginative and disciplined, turning big ideas into real things." },
+  { when: ["Warmth", "Steadiness"], name: "The Harmoniser", desc: "Caring and even-keeled, keeping things calm and kind." },
+  { when: ["Openness"], name: "The Seeker", desc: "Endlessly curious: ideas are your playground." },
 ];
 
 export const VALUE_DESC: Record<string, string> = {
-  Adventure: "You’re drawn to the new — you grow by leaping.",
+  Adventure: "You’re drawn to the new, growing by leaping.",
   Security: "You value stability and a sure footing.",
   Connection: "People come first; relationships are your anchor.",
   Achievement: "You’re driven to accomplish and rise to challenges.",
-  Freedom: "Autonomy matters — you do it your way.",
+  Freedom: "Autonomy matters: you do it your way.",
   Growth: "You’re here to learn and become more.",
 };
 

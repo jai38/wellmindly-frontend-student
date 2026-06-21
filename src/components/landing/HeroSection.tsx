@@ -28,7 +28,7 @@ export function HeroSection({ onCheckInClick, onExploreClick }: HeroSectionProps
         </h1>
 
         <p className="mt-6 text-base sm:text-lg text-ink-soft leading-relaxed max-w-[48ch]">
-          A warm, anonymous space to pause, check in, and unpack what you're carrying. No pressure, no labels — just a space to understand yourself.
+          A warm, anonymous space to pause, check in, and unpack what you're carrying. No pressure, no labels. Just a space to understand yourself.
         </p>
 
         {/* Action Buttons */}

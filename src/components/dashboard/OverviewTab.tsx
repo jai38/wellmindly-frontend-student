@@ -362,7 +362,7 @@ export function OverviewTab({
             <div>
               <h3 className="text-2xl font-black text-slate-900 mb-2">Emotional Check-in</h3>
               <p className="text-slate-500 font-medium leading-relaxed max-w-xl">
-                A two-minute wellbeing snapshot. See how you're really doing — and watch it shift over the weeks.
+                A two-minute wellbeing snapshot. See how you're really doing, and watch it shift over the weeks.
               </p>
             </div>
           </div>
