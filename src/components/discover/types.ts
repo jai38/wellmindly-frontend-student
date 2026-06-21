@@ -227,7 +227,7 @@ export const VALUE_DESC: Record<string, string> = {
 };
 
 export const TEST_ORDER = ["checkin", "phq9", "mood", "strengths", "bigfive", "values", "strengthshadow"];
-/** Discovery hub order — excludes 'checkin' which lives on its own dedicated tab */
+/** Discovery hub order, excludes 'checkin' which lives on its own dedicated tab */
 export const DISCOVER_TEST_ORDER = ["phq9", "mood", "strengths", "bigfive", "values", "strengthshadow"];
 export const STORAGE_KEY = "wm-discover";
 

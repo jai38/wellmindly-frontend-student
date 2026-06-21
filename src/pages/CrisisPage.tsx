@@ -56,7 +56,7 @@ export function CrisisPage() {
   }, []);
 
   useEffect(() => {
-    document.title = "Get Help Now — Crisis Support | WellMindly";
+    document.title = "Get Help Now | Crisis Support | WellMindly";
 
     const fetchHotlines = async () => {
       try {

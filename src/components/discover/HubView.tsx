@@ -16,7 +16,7 @@ export function HubView({ startTest, goTo }: HubViewProps) {
         Get to know <em className="text-plum font-semibold italic font-serif">yourself.</em>
       </h1>
       <p className="text-ink-soft text-base max-w-[54ch] mt-4 leading-relaxed font-medium">
-        Five quick self-discovery tests. Each takes about two minutes and hands back something worth keeping. Follow your curiosity — there's no wrong place to begin.
+        Five quick self-discovery tests. Each takes about two minutes and hands back something worth keeping. Follow your curiosity, there's no wrong place to begin.
       </p>
       
       <div className="flex gap-4 flex-wrap mt-5 text-[13px] text-ink-soft">

@@ -96,7 +96,7 @@ export function FeedbackForm({ resultId, onComplete }: FeedbackFormProps) {
           Before you go, tell us the truth.
         </h4>
         <p className="text-slate-500 font-medium text-xs">
-          There are no wrong answers — only honest ones.
+          There are no wrong answers, only honest ones.
         </p>
       </div>
 

@@ -16,7 +16,7 @@ export function Dashboard() {
 
   // Update document title for SEO
   useEffect(() => {
-    document.title = "Student Dashboard — WellMindly";
+    document.title = "Student Dashboard | WellMindly";
   }, []);
 
   return (
