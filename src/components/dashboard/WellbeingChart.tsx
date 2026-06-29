@@ -121,10 +121,13 @@ export function WellbeingChart({ timeline, onViewDetails }: WellbeingChartProps)
         <div className="absolute bottom-0 left-8 right-4 flex justify-between text-[10px] font-bold text-slate-400">
           {timeline && timeline.length > 0 ? (
             timeline.map((report, idx) => {
+              const N = timeline.length;
+              const step = Math.max(1, Math.round(N / 4));
+              const isLabel = idx === 0 || idx === N - 1 || (idx % step === 0 && idx !== 0 && idx !== N - 1);
               const d = new Date(report.date);
               return (
                 <span key={idx}>
-                  {d.toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                  {isLabel ? d.toLocaleDateString(undefined, { month: "short", day: "numeric" }) : ""}
                 </span>
               );
             })

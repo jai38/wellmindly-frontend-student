@@ -42,26 +42,31 @@ function LoginRoute() {
   return <LoginPage />;
 }
 
+import { MotionConfig } from 'framer-motion';
+
 function App() {
+  const isCapacitor = typeof window !== 'undefined' && !!(window as any).Capacitor;
   return (
     <AuthProvider>
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginRoute />} />
-          <Route path="/discover" element={<DiscoverRoute />} />
-          <Route path="/crisis" element={<CrisisPage />} />
-          <Route 
-            path="/dashboard" 
-            element={
-              <ProtectedRoute allowedRoles={['STUDENT']}>
-                <Dashboard />
-              </ProtectedRoute>
-            } 
-          />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
+      <MotionConfig reducedMotion={isCapacitor ? "always" : "user"}>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginRoute />} />
+            <Route path="/discover" element={<DiscoverRoute />} />
+            <Route path="/crisis" element={<CrisisPage />} />
+            <Route 
+              path="/dashboard" 
+              element={
+                <ProtectedRoute allowedRoles={['STUDENT']}>
+                  <Dashboard />
+                </ProtectedRoute>
+              } 
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </MotionConfig>
     </AuthProvider>
   );
 }

@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { Capacitor } from '@capacitor/core';
 
-let baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+let baseURL = import.meta.env.VITE_API_URL || 'https://api.wellmindly.com/api';
 
 if (!import.meta.env.VITE_API_URL && Capacitor.isNativePlatform()) {
   const platform = Capacitor.getPlatform();
   if (platform === 'android') {
-    baseURL = 'http://localhost:5000/api';
+    baseURL = 'https://api.wellmindly.com/api';
   } else if (platform === 'ios') {
-    baseURL = 'http://localhost:5000/api';
+    baseURL = 'https://api.wellmindly.com/api';
   }
 }
 
